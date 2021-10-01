@@ -77,7 +77,9 @@ GO_TEST_BINARY="gotest"
 
 			if len(a) > 4 && a[len(a)-4:] == "/..." {
 				var buf bytes.Buffer
-				c := exec.Command("go", "list", a)
+				c := exec.Command("go", "list", "-test",
+					"-f", "{{.ForTest}}",
+					a)
 				c.Stdout = &buf
 				c.Stderr = &buf
 				if err := c.Run(); err != nil {
